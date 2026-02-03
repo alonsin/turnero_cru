@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
+use Livewire\Component; 
 
 class ContentSwitcher extends Component
 {

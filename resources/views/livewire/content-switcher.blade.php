@@ -38,7 +38,7 @@
         <!-- Contenido dinámico -->
         <div class="animate-fade-in">
             @if ($section === 'juegos')
-            @include('livewire.sections.juegos')
+            <livewire:juegos />
             @elseif ($section === 'jugadores')
             @include('livewire.sections.jugadores')
             @endif

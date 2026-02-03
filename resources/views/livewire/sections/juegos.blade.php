@@ -139,7 +139,9 @@
     <main class="container-fluid px-0 px-md-4 py-4">
         <div class="container px-3 px-md-0">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-                <h2 class="h3 fw-bold mb-0">En Juego y Próximos</h2>
+                <h2 class="h3 fw-bold mb-0">En Juego y Próximos - {{$turnero[0]->tournament->name_tournament}}</h2>
+
+
 
                 <button class="btn btn-primary d-flex align-items-center gap-2 px-4">
                     <span class="material-symbols-outlined fs-6">add</span>
@@ -153,25 +155,31 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-striped mb-0">
                         <thead>
-                            <tr>
-                                <th>Date & Time</th>
-                                <th>Game</th>
-                                <th>Location</th>
-                                <th>Teams</th>
-                                <th>Status</th>
+                            <tr class="text-center">
+                                <th>Mesa</th>
+                                <th>Grupo</th>
+                                <th>Tiempo en Juego</th>
+                                <th>JUEGO</th>
+                                <th>Tipo en Turnero</th>
+                                <th>Estatus</th>
                                 <th class="text-end">Actions</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td data-label="Date & Time" class="fw-medium">July 15, 2024, 7:00 PM</td>
-                                <td data-label="Game">Soccer</td>
+
+
+                            @foreach ($turnero as $t )
+                            <tr class="text-center">
+                                <td data-label="Date & Time" class="fw-medium">{{$t->mesa->name}}</td>
+                                <td data-label="Game" class="text-center">{{$t->id_grupo}}</td>
                                 <td data-label="Location">City Park Field</td>
+                                <td data-label="Teams">Team A vs. Team B</td>
                                 <td data-label="Teams">Team A vs. Team B</td>
                                 <td data-label="Status">
                                     <span class="badge badge-scheduled">Scheduled</span>
                                 </td>
+
                                 <td data-label="Actions" class="text-end">
                                     <button class="action-btn">
                                         <span class="material-symbols-outlined fs-6">edit</span>
@@ -180,25 +188,12 @@
                                         <span class="material-symbols-outlined fs-6">cancel</span>
                                     </button>
                                 </td>
+
                             </tr>
 
-                            <tr>
-                                <td data-label="Date & Time" class="fw-medium">July 16, 2024, 8:30 PM</td>
-                                <td data-label="Game">Basketball</td>
-                                <td data-label="Location">Community Center Gym</td>
-                                <td data-label="Teams">Team C vs. Team D</td>
-                                <td data-label="Status">
-                                    <span class="badge badge-scheduled">Scheduled</span>
-                                </td>
-                                <td data-label="Actions" class="text-end">
-                                    <button class="action-btn">
-                                        <span class="material-symbols-outlined fs-6">edit</span>
-                                    </button>
-                                    <button class="action-btn btn-cancel">
-                                        <span class="material-symbols-outlined fs-6">cancel</span>
-                                    </button>
-                                </td>
-                            </tr>
+                            @endforeach
+
+
                         </tbody>
                     </table>
                 </div>
