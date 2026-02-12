@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\turnero;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class Juegos extends Component
 {
@@ -22,6 +23,11 @@ class Juegos extends Component
 
     public function mount()
     {
+        $this->loadGames();
+    }
+
+    public function loadGames()
+    {
         $baseQuery = turnero::with(
             'mesa',
             'tournament',
@@ -36,6 +42,12 @@ class Juegos extends Component
         $this->turneroEspera = (clone $baseQuery)
             ->where('id_tipo_juego_turner', '>', 11)
             ->get();
+    }
+
+    #[On('gameUpdated')]
+    public function refreshTable()
+    {
+        $this->loadGames();
     }
 
 
