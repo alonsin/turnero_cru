@@ -1,8 +1,6 @@
 <div>
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Estilos -->
     <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
@@ -10,11 +8,12 @@
             color: #212529;
         }
 
+        /* ===== DESKTOP TABLE ===== */
         .table-container {
-            border: 1px solid #dee2e6;
-            border-radius: 0.75rem;
+            border: 1px solid #e9ecef;
+            border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             background: #fff;
         }
 
@@ -24,22 +23,13 @@
             font-size: 0.75rem;
             letter-spacing: 0.05em;
             color: #6c757d;
-            padding: 1rem 1.25rem;
-            vertical-align: middle;
+            padding: 1rem;
         }
 
         .table tbody td {
-            padding: 0.85rem 1.25rem;
+            padding: 1rem;
+            font-size: 0.9rem;
             vertical-align: middle;
-            font-size: 0.875rem;
-        }
-
-        .badge-scheduled {
-            background-color: rgba(13, 110, 253, 0.1);
-            color: #0d6efd;
-            font-weight: 500;
-            border-radius: 50rem;
-            padding: 0.35em 0.8em;
         }
 
         .action-btn {
@@ -52,235 +42,302 @@
         }
 
         .action-btn:hover {
-            background-color: #f8f9fa;
+            background-color: #f1f3f5;
             color: #0d6efd;
         }
 
-        .action-btn.btn-cancel:hover {
-            background-color: #fff5f5;
-            color: #dc3545;
+        /* ===== MOBILE CARDS ===== */
+        .game-card {
+            border: 1px solid #e9ecef;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: 0.2s ease;
         }
 
-        /* 🔥 RESPONSIVE TABLE (CARD STYLE MOBILE) */
-        @media (max-width: 768px) {
-
-            main {
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-            }
-
-            .table-container {
-                border-radius: 0;
-                border-left: 0;
-                border-right: 0;
-            }
-
-            table thead {
-                display: none;
-            }
-
-            table,
-            table tbody,
-            table tr,
-            table td {
-                display: block;
-                width: 100%;
-            }
-
-            table tr {
-                background: #ffffff;
-                border: 1px solid #dee2e6;
-                border-radius: 0.75rem;
-                margin: 0.75rem;
-                padding: 0.75rem;
-                box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, .05);
-            }
-
-            table td {
-                border: none;
-                padding: 0.45rem 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 0.85rem;
-            }
-
-            table td::before {
-                content: attr(data-label);
-                font-weight: 600;
-                color: #6c757d;
-                font-size: 0.7rem;
-                text-transform: uppercase;
-            }
-
-            table td.text-end {
-                justify-content: flex-end;
-                gap: 0.5rem;
-            }
+        .game-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
         }
 
-        /* FAB */
-        .fab-btn {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
+        .game-header {
             display: flex;
-            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 0.75rem;
+        }
+
+        .game-players {
+            display: flex;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .game-status {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .game-actions {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
     </style>
-    <main class="container-fluid px-0 px-md-4 py-4">
-        <div class="container px-3 px-md-0">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-                <h2 class="h3 fw-bold mb-0">{{$turneroMesas[0]->tournament->name_tournament}}</h2>
-            </div>
+
+    <main class="container-fluid px-3 px-md-4 py-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h4 fw-bold mb-0">
+                {{$turneroMesas[0]->tournament->name_tournament ?? 'Torneo'}}
+            </h2>
         </div>
 
-        <div class="container-fluid px-0">
-            <div>
-                <ul class="nav nav-tabs mb-3" id="turneroTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active"
-                            data-bs-toggle="tab"
-                            data-bs-target="#juegos"
-                            type="button"
-                            role="tab">
-                            Juegos Actuales
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#espera"
-                            type="button"
-                            role="tab">
-                            Juegos en Espera
-                        </button>
-                    </li>
-                </ul>
+        {{-- TABS --}}
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <button class="nav-link {{ $activeTab === 'juegos' ? 'active' : '' }}"
+                    wire:click="$set('activeTab', 'juegos')">
+                    Juegos Actuales
+                </button>
+            </li>
 
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="juegos" role="tabpanel">
-                        <div class="table-responsive">
-                            <div class="table-container">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-striped mb-0">
-                                        <thead>
-                                            <tr class="text-center">
-                                                <th>Tipo en Turnero</th>
-                                                <th>Mesa</th>
-                                                <th>Grupo</th>
-                                                <th>JUEGO</th>
-                                                <th>Estatus</th>
-                                                <th class="text-center">Acciones</th>
-                                            </tr>
-                                        </thead>
+            <li class="nav-item">
+                <button class="nav-link {{ $activeTab === 'espera' ? 'active' : '' }}"
+                    wire:click="$set('activeTab', 'espera')">
+                    Juegos en Espera
+                </button>
+            </li>
 
-                                        <tbody>
-                                            @foreach ($turneroMesas as $t )
-                                            <tr class="text-center">
-                                                <td data-label="Tipo">{{$t->TypeGameTurner->nombre}}</td>
-                                                <td data-label="Mesa" class="fw-medium">
-                                                    {{ $t->mesa->name ?? 'Sin mesa / En espera' }}
-                                                </td>
-                                                <td data-label="Grupo" class="text-center">{{$t->id_grupo}}</td>
-                                                <td data-label="Juego" class="text-center text-nowrap">
-                                                    <span class="badge bg-primary bg-opacity-25 text-primary">
-                                                        {{$t->player1->name_player}}
-                                                    </span>
-                                                    <small class="mx-1 text-muted fw-semibold">vs</small>
-                                                    <span class="badge bg-warning bg-opacity-25 text-danger">
-                                                        {{$t->player2->name_player}}
-                                                    </span>
-                                                </td>
-                                                <td data-label="Status" class="text-center">
-                                                    <span class="badge 
-                                        {{ $statusBadges[$t->estatus->name_estatus] ?? 'bg-light text-dark' }}">
-                                                        {{ $t->estatus->name_estatus }}
-                                                    </span>
-                                                </td>
-                                                <td data-label="Acciones" class="text-center">
-                                                    <button 
-    class="action-btn"
-    wire:click="$dispatch('openEditGameModal', { id: {{ $t->id }} })"
->
-    <span class="material-symbols-outlined fs-6">edit</span>
-</button>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <li class="nav-item">
+                <button class="nav-link {{ $activeTab === 'finalizados' ? 'active' : '' }}"
+                    wire:click="$set('activeTab', 'finalizados')">
+                    Juegos Finalizados
+                </button>
+            </li>
+        </ul>
 
-                    <div class="tab-pane fade" id="espera" role="tabpanel">
-                        <div class="table-responsive">
-                            <div class="table-responsive">
-                                <div class="table-container">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-striped mb-0">
-                                            <thead>
-                                                <tr class="text-center">
-                                                    <th>Tipo en Turnero</th>
-                                                    <th>Mesa</th>
-                                                    <th>Grupo</th>
-                                                    <th>JUEGO</th>
-                                                    <th>Estatus</th>
-                                                    <th class="text-end">Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($turneroEspera as $t )
-                                                <tr class="text-center">
-                                                    <td data-label="Tipo">{{$t->TypeGameTurner->nombre}}</td>
-                                                    <td data-label="Mesa" class="fw-medium">
-                                                        {{ $t->mesa->name ?? 'Sin mesa / En espera' }}
-                                                    </td>
-                                                    <td data-label="Grupo" class="text-center">{{$t->id_grupo}}</td>
-                                                    <td data-label="Juego" class="text-center text-nowrap">
-                                                        <span class="badge bg-primary bg-opacity-25 text-primary">
-                                                            {{$t->player1->name_player}}
-                                                        </span>
-                                                        <small class="mx-1 text-muted fw-semibold">vs</small>
-                                                        <span class="badge bg-warning bg-opacity-25 text-danger">
-                                                            {{$t->player2->name_player}}
-                                                        </span>
-                                                    </td>
-                                                    <td data-label="Status" class="text-center">
-                                                        <span class="badge 
-                                        {{ $statusBadges[$t->estatus->name_estatus] ?? 'bg-light text-dark' }}">
-                                                            {{ $t->estatus->name_estatus }}
-                                                        </span>
-                                                    </td>
-                                                    <td data-label="Acciones" class="text-end">
-                                                        <button class="action-btn">
-                                                            <span class="material-symbols-outlined fs-6">edit</span>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="tab-content">
+
+            {{-- ================= JUEGOS ACTUALES ================= --}}
+            <div class="tab-pane fade {{ $activeTab === 'juegos' ? 'show active' : '' }}">
+
+                {{-- DESKTOP --}}
+                <div class="d-none d-md-block">
+                    <div class="table-container">
+                        <table class="table table-hover mb-0 text-center">
+                            <thead>
+                                <tr>
+                                    <th>Mesa</th>
+                                    <th>Grupo</th>
+                                    <th>Juego</th>
+                                    <th>Estatus</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($turneroMesas as $t)
+                                <tr>
+                                    <td>{{ $t->mesa->name ?? 'Sin mesa / En espera' }}</td>
+                                    <td>{{$t->id_grupo}}</td>
+                                    <td>
+                                        <span class="badge bg-primary bg-opacity-25 text-primary">
+                                            {{$t->player1->name_player}}
+                                        </span>
+                                        vs
+                                        <span class="badge bg-warning bg-opacity-25 text-danger">
+                                            {{$t->player2->name_player}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ $statusBadges[$t->estatus->name_estatus] ?? 'bg-light text-dark' }}">
+                                            {{ $t->estatus->name_estatus }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="action-btn"
+                                            wire:click="$dispatch('openEditGameModal', {
+                                                id: {{ $t->id }},
+                                                from: 'currentgames',
+                                                mode: 'edit'
+                                            })">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+
+                {{-- MOBILE --}}
+                <div class="d-md-none">
+                    @foreach ($turneroMesas as $t)
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span><strong>Mesa:</strong> {{ $t->mesa->name ?? 'En espera' }}</span>
+                            <span><strong>Grupo:</strong> {{$t->id_grupo}}</span>
+                        </div>
+
+                        <div class="game-players">
+                            <span class="badge bg-primary bg-opacity-25 text-primary">
+                                {{$t->player1->name_player}}
+                            </span>
+                            <span class="text-muted">vs</span>
+                            <span class="badge bg-warning bg-opacity-25 text-danger">
+                                {{$t->player2->name_player}}
+                            </span>
+                        </div>
+
+                        <div class="game-status">
+                            <span class="badge {{ $statusBadges[$t->estatus->name_estatus] ?? 'bg-light text-dark' }}">
+                                {{ $t->estatus->name_estatus }}
+                            </span>
+                        </div>
+
+                        <div class="game-actions">
+                            <button class="btn btn-sm btn-outline-primary"
+                                wire:click="$dispatch('openEditGameModal', {
+                                        id: {{ $t->id }},
+                                        from: 'currentgames',
+                                        mode: 'edit'
+                                    })">
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- ================= ESPERA ================= --}}
+            <div class="tab-pane fade {{ $activeTab === 'espera' ? 'show active' : '' }}">
+
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <h5 class="fw-semibold mb-0">Juegos próximos</h5>
+
+                    <button
+                        wire:click="$dispatch('openEditGameModal', {id: null,from: 'waitinggames',mode: 'create'})"
+                        class="btn btn-primary shadow-sm">
+                        Agregar juego
+                    </button>
+                </div>
+
+                {{-- DESKTOP --}}
+                <div class="d-none d-md-block">
+                    <div class="table-container">
+                        <table class="table table-hover mb-0 text-center">
+                            <thead>
+                                <tr>
+                                    <th>Turno</th>
+                                    <th>Mesa</th>
+                                    <th>Grupo</th>
+                                    <th>Juego</th>
+                                    <th>Estatus</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($turneroEspera as $t)
+                                <tr>
+                                    <td>00{{$t->posicion_cola}}</td>
+                                    <td>
+                                        <button wire:click="asignarMesa({{ $t->id }})"
+                                            class="btn btn-sm btn-outline-primary">
+                                            Asignar mesa
+                                        </button>
+                                    </td>
+                                    <td>{{$t->id_grupo}}</td>
+                                    <td>
+                                        <span class="badge bg-primary bg-opacity-25 text-primary">
+                                            {{$t->player1->name_player}}
+                                        </span>
+                                        vs
+                                        <span class="badge bg-warning bg-opacity-25 text-danger">
+                                            {{$t->player2->name_player}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ $statusBadges[$t->estatus->name_estatus] ?? 'bg-light text-dark' }}">
+                                            {{ $t->estatus->name_estatus }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="action-btn"
+                                            wire:click="$dispatch('openEditGameModal', {
+                                                id: {{ $t->id }},
+                                                from: 'waitinggames',
+                                                mode: 'edit'
+                                            })">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {{-- MOBILE --}}
+                <div class="d-md-none">
+                    @foreach ($turneroEspera as $t)
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span><strong>Turno:</strong> 00{{$t->posicion_cola}}</span>
+                            <span><strong>Grupo:</strong> {{$t->id_grupo}}</span>
+                        </div>
+
+                        <div class="game-players">
+                            <span class="badge bg-primary bg-opacity-25 text-primary">
+                                {{$t->player1->name_player}}
+                            </span>
+                            <span class="text-muted">vs</span>
+                            <span class="badge bg-warning bg-opacity-25 text-danger">
+                                {{$t->player2->name_player}}
+                            </span>
+                        </div>
+
+                        <div class="game-status">
+                            <span class="badge {{ $statusBadges[$t->estatus->name_estatus] ?? 'bg-light text-dark' }}">
+                                {{ $t->estatus->name_estatus }}
+                            </span>
+                        </div>
+
+                        <div class="game-actions">
+                            <button class="btn btn-sm btn-outline-primary"
+                                wire:click="asignarMesa({{ $t->id }})">
+                                Asignar mesa
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-secondary"
+                                wire:click="$dispatch('openEditGameModal', {
+                                        id: {{ $t->id }},
+                                        from: 'waitinggames',
+                                        mode: 'edit'
+                                    })">
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+
             </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         </div>
 
         <livewire:edit-game-modal />
-
 
     </main>
 </div>

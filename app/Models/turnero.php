@@ -14,12 +14,13 @@ class turnero extends Model
 
     protected $fillable = [
         'id_tournament',
-        'id_mesa',
+        'id_mesa',  
         'id_grupo',
         'tiempo_total_de_juego',
         'id_jugador_1',
         'id_jugador_2',
         'id_tipo_juego_turner',
+        'posicion_cola',
         'id_estatus'
     ];
 

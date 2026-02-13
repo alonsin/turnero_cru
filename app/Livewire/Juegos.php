@@ -12,10 +12,11 @@ class Juegos extends Component
     public $message = 'Bienvenido a la sección de Juegos';
     public $turneroMesas = [];
     public $turneroEspera = [];
+    public $activeTab = 'juegos';
 
     public $statusBadges = [
         'EN JUEGO'    => 'bg-success',
-        'EN PAUSA'    => 'bg-warning text-dark',
+        'EN COLA'    => 'bg-warning text-dark',
         'TERMINADO'   => 'bg-secondary',
         'FINALIZADO'  => 'bg-danger',
         'EN ESPERA'   => 'bg-info text-dark',
@@ -36,11 +37,12 @@ class Juegos extends Component
             'estatus'
         );
         $this->turneroMesas = (clone $baseQuery)
-            ->where('id_tipo_juego_turner', '<=', 11)
+            ->whereNotNull('id_mesa')
+            ->where('id_mesa', '!=', 0)
             ->get();
 
         $this->turneroEspera = (clone $baseQuery)
-            ->where('id_tipo_juego_turner', '>', 11)
+            ->where('posicion_cola', '<>', NULL)
             ->get();
     }
 

@@ -9,7 +9,13 @@
 
                     <div>
                         <h5 class="modal-title fw-bold mb-0">
-                            🎱 Editar - {{ $typeGameTurner }}
+                            @if ($modecurrent === 'edit')
+                            🎱 Actualizar - JUEGO {{ $mesa }}
+                            @endif
+                            @if ($modecurrent === 'create')
+                            🎱 NUEVO - JUEGO
+                            @endif
+
                         </h5>
                     </div>
 
@@ -20,25 +26,36 @@
                 </div>
 
                 <div class="modal-body bg-light pt-4">
-
-                    {{-- INFORMACIÓN GENERAL --}}
                     <div class="card border-0 rounded-4 p-4 mb-4 shadow-sm">
                         <div class="row g-4">
+
+                            {{-- Grupo --}}
                             <div class="col-12 col-md-4">
                                 <label class="form-label fw-semibold small text-uppercase text-muted">
                                     Grupo
                                 </label>
-                                <select class="form-select rounded-3"
+
+                                <select
+                                    class="form-select rounded-3 @error('grupo_id') is-invalid @enderror"
                                     wire:model="grupo_id">
+
                                     <option value="">Seleccione grupo</option>
+
                                     @foreach($grupos as $value => $label)
                                     <option value="{{ $value }}">
                                         {{ $label }}
                                     </option>
                                     @endforeach
                                 </select>
+
+                                @error('grupo_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
 
+                            @if($fromTable !== 'waitinggames')
                             <div class="col-12 col-md-8">
                                 <label class="form-label fw-semibold small text-uppercase text-muted">
                                     Estatus del Juego
@@ -53,9 +70,10 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @endif
+
                         </div>
                     </div>
-
                     {{-- ENFRENTAMIENTO --}}
                     <div class="card border-0 rounded-4 p-4 shadow">
 
@@ -72,8 +90,9 @@
                                 <label class="form-label fw-semibold small text-uppercase text-muted">
                                     Jugador 1
                                 </label>
-                                <select class="form-select rounded-3"
-                                    wire:model="player1_id">
+                                <select
+                                    wire:model="player1_id"
+                                    class="form-select rounded-3 @error('player1_id') is-invalid @enderror">
                                     <option value="">Seleccione jugador</option>
                                     @foreach($playersAll as $player)
                                     <option value="{{ $player->id }}">
@@ -81,6 +100,13 @@
                                     </option>
                                     @endforeach
                                 </select>
+
+                                @error('player1_id')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+
                             </div>
 
                             {{-- VS Visual Mejorado --}}
@@ -101,7 +127,8 @@
                                 <label class="form-label fw-semibold small text-uppercase text-muted">
                                     Jugador 2
                                 </label>
-                                <select class="form-select rounded-3"
+                                <select
+                                    class="form-select rounded-3 @error('player2_id') is-invalid @enderror"
                                     wire:model="player2_id">
                                     <option value="">Seleccione jugador</option>
                                     @foreach($playersAll as $player)
@@ -110,6 +137,12 @@
                                     </option>
                                     @endforeach
                                 </select>
+
+                                @error('player2_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
 
                         </div>
@@ -132,14 +165,14 @@
                         wire:loading.attr="disabled">
 
                         <span wire:loading.remove>
-                            💾 Actualizar
+                            {{ $modecurrent === 'edit' ? '💾 Actualizar' : '➕ Crear Juego' }}
                         </span>
 
                         <span wire:loading>
                             Guardando...
                         </span>
-
                     </button>
+
 
                 </div>
 
