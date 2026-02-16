@@ -29,7 +29,7 @@ class EditGameModal extends Component
 
     public function getStatusAll()
     {
-        $this->estatusall = EstatusTurner::where('id', '!=', 2)->get();
+        $this->estatusall = EstatusTurner::where('id', 2)->get();
     }
     public function getplayersAll()
     {
@@ -38,8 +38,7 @@ class EditGameModal extends Component
 
     #[On('openEditGameModal')]
     public function loadGame($id = null, $from = null, $mode = 'edit')
-    {
-       
+    {       
         $this->resetValidation();
         $this->resetErrorBag();
         $this->fromTable = $from;

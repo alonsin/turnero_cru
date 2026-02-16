@@ -37,7 +37,8 @@
 
                                 <select
                                     class="form-select rounded-3 @error('grupo_id') is-invalid @enderror"
-                                    wire:model="grupo_id">
+                                    wire:model="grupo_id"
+                                    @disabled($fromTable=='currentgames' )>
 
                                     <option value="">Seleccione grupo</option>
 
@@ -92,6 +93,7 @@
                                 </label>
                                 <select
                                     wire:model="player1_id"
+                                    @disabled($fromTable=='currentgames' )
                                     class="form-select rounded-3 @error('player1_id') is-invalid @enderror">
                                     <option value="">Seleccione jugador</option>
                                     @foreach($playersAll as $player)
@@ -129,6 +131,7 @@
                                 </label>
                                 <select
                                     class="form-select rounded-3 @error('player2_id') is-invalid @enderror"
+                                    @disabled($fromTable == 'currentgames')
                                     wire:model="player2_id">
                                     <option value="">Seleccione jugador</option>
                                     @foreach($playersAll as $player)

@@ -80,10 +80,41 @@
         const modal = new bootstrap.Modal(document.getElementById('editGameModal'));
         modal.show();
       });
+
+      window.addEventListener('show-asign-table-modal', event => {
+        const modal = new bootstrap.Modal(document.getElementById('asignTableGameModal'));
+        modal.show();
+      });
+
+      window.addEventListener('show-end-game-modal', event => {
+        const modal = new bootstrap.Modal(document.getElementById('endGameModal'));
+        modal.show();
+      });
+
       document.addEventListener('livewire:init', () => {
         Livewire.on('hide-edit-modal', () => {
           // Cambia '#editGameModal' por el ID real de tu modal en el HTML
           const modalElement = document.getElementById('editGameModal');
+          const modalInstance = bootstrap.Modal.getInstance(modalElement);
+
+          if (modalInstance) {
+            modalInstance.hide();
+          }
+        });
+      });
+      document.addEventListener('livewire:init', () => {
+        Livewire.on('hide-end-game-modal', () => {
+          // Cambia '#editGameModal' por el ID real de tu modal en el HTML
+          const modalElement = document.getElementById('endGameModal');
+          const modalInstance = bootstrap.Modal.getInstance(modalElement);
+
+          if (modalInstance) {
+            modalInstance.hide();
+          }
+        });
+        Livewire.on('hide-asign-game-modal', () => {
+          // Cambia '#editGameModal' por el ID real de tu modal en el HTML
+          const modalElement = document.getElementById('asignTableGameModal');
           const modalInstance = bootstrap.Modal.getInstance(modalElement);
 
           if (modalInstance) {

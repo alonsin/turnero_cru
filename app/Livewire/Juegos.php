@@ -13,6 +13,7 @@ class Juegos extends Component
     public $turneroMesas = [];
     public $turneroEspera = [];
     public $activeTab = 'juegos';
+    public $mesa, $player1name, $player2name, $grupo_id;
 
     public $statusBadges = [
         'EN JUEGO'    => 'bg-success',
@@ -39,6 +40,7 @@ class Juegos extends Component
         $this->turneroMesas = (clone $baseQuery)
             ->whereNotNull('id_mesa')
             ->where('id_mesa', '!=', 0)
+            ->orderBy('id_mesa', 'asc')
             ->get();
 
         $this->turneroEspera = (clone $baseQuery)
@@ -51,7 +53,6 @@ class Juegos extends Component
     {
         $this->loadGames();
     }
-
 
     public function render()
     {
