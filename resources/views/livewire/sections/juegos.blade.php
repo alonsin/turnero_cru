@@ -297,7 +297,7 @@
                     </button>
 
                     <button class="status-action-btn"
-                        wire:click="$dispatch('endGame', { id: {{ $t->id }} })">
+                        wire:click="$dispatch('endGame', { id: {{ $t->id }}, mode: 'edit' })">
                         <span class="material-symbols-outlined">task_alt</span>
                     </button>
 
