@@ -14,6 +14,9 @@ Route::get('/', function () {
 Route::get('/administracion-partidas', function () {
     return view('pages.main');
 });
+Route::get('/turnero', function () {
+    return view('pages.turnero');
+});
 
 
 
