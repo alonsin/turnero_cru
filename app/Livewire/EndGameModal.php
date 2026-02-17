@@ -19,7 +19,7 @@ class EndGameModal extends Component
 
     #[On('endGame')]
     public function endGame($id, $mode)
-    {   
+    {
         $this->resetDataForm();
         $this->resetValidation();
         $this->resetErrorBag();

@@ -4,10 +4,9 @@ namespace App\Livewire;
 
 use App\Models\EstatusTurner;
 use App\Models\turnero;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
-class ShowDataTurnero extends Component
+class ContainerCarruselTurner extends Component
 {
 
     public $turneroEncurso = [];
@@ -18,6 +17,7 @@ class ShowDataTurnero extends Component
     {
         $this->loadGamesTurner();
     }
+
 
     public function loadGamesTurner()
     {
@@ -31,23 +31,10 @@ class ShowDataTurnero extends Component
         $this->turneroEncurso = (clone $baseQuery)
             ->where('id_estatus', EstatusTurner::ENJUEGO)
             ->get();
-        // Query base para cola ordenada
-        $colaQuery = (clone $baseQuery)
-            ->where('id_estatus', EstatusTurner::ENCOLA)
-            ->orderBy('id', 'asc');
-
-        // 🔥 Próxima partida (primera en cola)
-        $this->proximaPartida = (clone $colaQuery)->first();
-
-        // 🔥 Siguientes 3 después de la próxima
-        $this->siguientesPartidas = (clone $colaQuery)
-            ->skip(1)
-            ->take(4)
-            ->get();
     }
 
     public function render()
     {
-        return view('livewire.show-data-turnero');
+        return view('livewire.container-carrusel-turner');
     }
 }
