@@ -15,7 +15,6 @@
                             @if ($modecurrent === 'create')
                             🎱 NUEVO - JUEGO
                             @endif
-
                         </h5>
                     </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\EstatusTurner;
 use App\Models\turnero;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -12,6 +13,7 @@ class Juegos extends Component
     public $message = 'Bienvenido a la sección de Juegos';
     public $turneroMesas = [];
     public $turneroEspera = [];
+    public $turneroFinalizados = [];
     public $activeTab = 'juegos';
     public $mesa, $player1name, $player2name, $grupo_id;
 
@@ -37,6 +39,11 @@ class Juegos extends Component
             'player2',
             'estatus'
         );
+        $this->turneroFinalizados = (clone $baseQuery)
+            ->where('id_estatus', EstatusTurner::FINALIZADO)
+            ->orderBy('id_grupo', 'asc')
+            ->get();
+
         $this->turneroMesas = (clone $baseQuery)
             ->whereNotNull('id_mesa')
             ->where('id_mesa', '!=', 0)

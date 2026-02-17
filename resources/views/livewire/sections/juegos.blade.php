@@ -243,7 +243,7 @@
                             </td>
                             <td>
                                 <button class="action-btn action-btn-danger"
-                                    wire:click="$dispatch('endGame', { id: {{ $t->id }} })">
+                                    wire:click="$dispatch('endGame', { id: {{ $t->id }}, mode: 'edit' })">
 
                                     <span class="material-symbols-outlined">
                                         task_alt
@@ -297,7 +297,7 @@
                     </button>
 
                     <button class="status-action-btn"
-                        wire:click="$dispatch('endGame', { id: {{ $t->id }} })"                        >
+                        wire:click="$dispatch('endGame', { id: {{ $t->id }} })">
                         <span class="material-symbols-outlined">task_alt</span>
                     </button>
 
@@ -403,17 +403,146 @@
 
         {{-- ================= FINALIZADOS ================= --}}
         @if($activeTab === 'finalizados')
-        <div class="text-center py-5">
-            <h5 class="fw-semibold text-muted">
-                Aquí irá el contenido de juegos finalizados
-            </h5>
+        <div class="text-center py-0">
+            {{-- Desktop --}}
+            <div class="d-none d-md-block">
+                <div class="table-container">
+                    <table class="table table-hover mb-0 text-center">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Grupo</th>
+                                <th>Jugador 1</th>
+                                <th>Puntos</th>
+                                <th>VS</th>
+                                <th>Puntos</th>
+                                <th>Jugador 2</th>
+                                <th>Entradas</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($turneroFinalizados as $t)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    <span class="badge rounded-pill px-3 py-2 fw-semibold shadow-sm bg-warning-subtle text-warning-emphasis">
+                                        <strong>{{ $t->id_grupo }}</strong>
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ $t->player1->name_player }}
+                                    ( <strong>{{ $t->carambolas_j1 }}</strong> ) - {{ $t->entradas > 0 
+                                                                                    ? number_format($t->carambolas_j1 / $t->entradas, 3) 
+                                                                                    : '0.000' }}
+                                </td>
+                                <td>
+                                    {{ $t->pts_j1 }}
+                                </td>
+                                <td>
+                                    <span class="text-muted">vs</span>
+                                </td>
+                                <td>
+                                    {{ $t->pts_j2 }}
+                                </td>
+                                <td>
+                                    {{ $t->player2->name_player }}
+                                    ( <strong>{{ $t->carambolas_j2 }}</strong> ) - {{ $t->entradas > 0 
+                                                                                    ? number_format($t->carambolas_j2 / $t->entradas, 3) 
+                                                                                    : '0.000' }}
+                                </td>
+                                </td>
+                                <td>
+                                    <span class="badge rounded-pill px-3 py-2 fw-semibold shadow-sm
+                                        {{ $t->entradas == 35 ? 'bg-danger-subtle text-success-emphasis' : 'bg-success-subtle text-danger-emphasis' }}">
+                                        {{ $t->entradas }}
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <button class="action-btn"
+                                        wire:click="$dispatch('endGame', { id: {{ $t->id }}, mode: 'editfinished' })">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="6">No hay juegos en espera.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {{-- Mobile --}}
+            <div class="d-block d-md-none">
+                @forelse ($turneroFinalizados as $t)
+
+                <div class="card shadow-sm mb-3 border-0">
+                    <div class="card-body p-3">
+
+                        {{-- Header --}}
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold text-primary">
+                                #{{ $loop->iteration }}
+                            </span>
+                            <span class="badge bg-secondary">
+                                Grupo {{ $t->id_grupo }}
+                            </span>
+                        </div>
+
+                        {{-- Marcador --}}
+                        <div class="text-center my-3">
+
+                            <div class="fw-semibold">
+                                {{ $t->player1->name_player }}
+                            </div>
+
+                            <div class="display-6 fw-bold">
+                                {{ $t->carambolas_j1 }}
+                                <span class="text-muted mx-2 fs-6">vs</span>
+                                {{ $t->carambolas_j2 }}
+                            </div>
+
+                            <div class="fw-semibold">
+                                {{ $t->player2->name_player }}
+                            </div>
+
+                        </div>
+
+                        {{-- Entradas --}}
+                        <div class="d-flex justify-content-between align-items-center small text-muted mb-3">
+                            <span>Entradas:</span>
+                            <span class="fw-bold">{{ $t->entradas }}</span>
+                        </div>
+
+                        {{-- Acciones --}}
+                        <div class="d-grid">
+                            <button class="btn btn-outline-primary btn-sm"
+                                wire:click="$dispatch('endGame', { id: {{ $t->id }}, mode: 'editfinished' })">
+                                <span class="material-symbols-outlined align-middle">edit</span>
+                                Editar resultado
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                @empty
+                <div class="text-center text-muted py-4">
+                    No hay juegos finalizados.
+                </div>
+                @endforelse
+            </div>
+
         </div>
         @endif
         @if($activeTab === 'promediosgrupos')
-        <div class="text-center py-5">
-            <h5 class="fw-semibold text-muted">
-                Aquí irá el contenido de los promedios y pases por grupos
-            </h5>
+        <div class="text-center">
+            <livewire:average-groups-results />
         </div>
         @endif
         @if($activeTab === 'promfinales')

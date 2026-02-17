@@ -9,7 +9,12 @@
 
                     <div class="w-100 text-center">
                         <h6 class="text-uppercase small mb-2 opacity-75">
+                            @if ($modecurrent === 'edit')
                             Finalizar Juego
+                            @endif
+                            @if ($modecurrent === 'editfinished')
+                            Actualizar Juego Finalizado
+                            @endif
                         </h6>
 
                         <span class="badge bg-light text-dark px-3 py-2 rounded-pill mb-3">
@@ -113,9 +118,18 @@
                         wire:click="save"
                         wire:loading.attr="disabled">
 
+                        @if ($modecurrent === 'edit')
                         <span wire:loading.remove>
                             Finalizar Juego
                         </span>
+                        @endif
+                        @if ($modecurrent === 'editfinished')
+                        <span wire:loading.remove>
+                            Actualizar
+                        </span>
+                        @endif
+
+
 
                         <span wire:loading>
                             Guardando...
