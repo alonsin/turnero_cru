@@ -2,37 +2,37 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <title>TURNERO C R U</title>
-  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
-  <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Public+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary": "#13a4ec",
-            "background-light": "#f6f7f8",
-            "background-dark": "#101c22",
-          },
-          fontFamily: {
-            "display": ["Public Sans"]
-          },
-          borderRadius: {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-        },
-      },
-    }
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <style type="text/tailwindcss">
-    @layer utilities {
+    <meta charset="utf-8" />
+    <title>TURNERO C R U</title>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Public+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-light": "#000000",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        @layer utilities {
             .scrollbar-hide::-webkit-scrollbar {
                 display: none;
             }
@@ -104,9 +104,9 @@
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display">
-  <div class="flex flex-col min-h-screen">
-     <livewire:show-data-turnero />
-  </div>
+    <div class="flex flex-col min-h-screen">
+        <livewire:show-data-turnero />
+    </div>
 
 </body>
 

@@ -1,7 +1,8 @@
  <div class="w-full lg:flex-grow lg:w-2/3 flex flex-col">
-     <h2 class="text-5xl font-black text-black dark:text-white mb-8 text-center drop-shadow-lg animate-fade-in-down">
+     <h1 class="text-7xl font-black text-white dark:text-white mb-8 text-center drop-shadow-lg animate-fade-in-down">Copa Longoni 2026</h1>
+     <h4 class="text-3xl font-black text-white dark:text-white mb-8 text-center drop-shadow-lg animate-fade-in-down">
          Partidas en Juego
-     </h2>
+     </h4>
 
      <!-- CONTENEDOR DEL CARRUSEL -->
      <div id="carousel-partidas" class="relative h-[1060px] overflow-hidden rounded-3xl" wire:poll.55s="loadGamesTurner">
@@ -25,7 +26,7 @@
                          <p class="text-lg font-semibold text-black dark:text-white mt-3">{{$t->player1->name_player}}</p>
                      </div>
 
-                     <span class="text-6xl font-black text-green-500">VS</span>
+                     <span class="text-6xl font-black text-blue-500">VS</span>
 
                      <div class="flex flex-col items-center">
                          <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-green-500 shadow-xl">
@@ -37,7 +38,7 @@
 
                  <!-- Cronómetro -->
                  <div class="lg:w-1/4 text-right">
-                     <p class="text-xl font-medium text-green-600 dark:text-green-400">{{$t->estatus->name_estatus}}</p>
+                     <p class="text-xl font-medium text-blue-600 dark:text-green-400">{{$t->estatus->name_estatus}}</p>
                  </div>
              </div>
              @empty

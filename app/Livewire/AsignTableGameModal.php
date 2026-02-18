@@ -18,6 +18,11 @@ class AsignTableGameModal extends Component
     #[On('openAssingTable')]
     public function loadGame($id)
     {
+        $this->resetValidation();
+        $this->resetErrorBag();
+        $this->reset([
+            'mesaid'
+        ]);
         $this->id_juego = $id;
         $this->getMesasDisponibles();
         $game = turnero::with([
