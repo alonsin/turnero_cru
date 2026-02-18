@@ -12,18 +12,18 @@
 
 
 
-      <div class="relative w-full bg-white dark:bg-background-dark/40 rounded-3xl shadow-2xl border-b-8 border-[#f59e0b] overflow-hidden flex flex-col items-center p-8 cursor-pointer group transition-transform duration-500 hover:scale-[1.01]">
+      <div class="relative w-full bg-white dark:bg-background-dark/40 rounded-3xl shadow-2xl border-b-8 border-[#f5290b] overflow-hidden flex flex-col items-center p-8 cursor-pointer group transition-transform duration-500 hover:scale-[1.01]">
 
         <!-- Halo de pulso (animación tipo radar) -->
         <div class="absolute inset-0 flex items-center justify-center">
           <div class="relative w-full h-full flex items-center justify-center">
-            <span class="absolute w-full h-full bg-[#f59e0b]/20 rounded-full pulse-ring"></span>
-            <span class="absolute w-full h-full bg-[#f59e0b]/10 rounded-full pulse-ring delay-200"></span>
+            <span class="absolute w-full h-full bg-[#f5290b]/20 rounded-full pulse-ring"></span>
+            <span class="absolute w-full h-full bg-[#f5290b]/10 rounded-full pulse-ring delay-200"></span>
           </div>
         </div>
 
         <!-- Capa sutil al pasar el cursor -->
-        <div class="absolute inset-0 bg-[#f59e0b]/10 dark:bg-[#f59e0b]/5 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+        <div class="absolute inset-0 bg-[#f5290b]/10 dark:bg-[#f5290b]/5 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
 
         <!-- Contenido principal -->
         @if($proximaPartida)
@@ -37,7 +37,7 @@
 
             <!-- Player 1 -->
             <div class="flex flex-col items-center">
-              <div class="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-700 overflow-hidden border-4 border-[#f59e0b] shadow-xl">
+              <div class="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-700 overflow-hidden border-4 border-[#f5290b] shadow-xl">
                 <img
                   alt="Jugador 1"
                   class="w-full h-full object-cover"
@@ -48,13 +48,13 @@
               </p>
             </div>
 
-            <span class="text-6xl font-black text-[#f59e0b]">
+            <span class="text-6xl font-black text-[#f5290b]">
               VS
             </span>
 
             <!-- Player 2 -->
             <div class="flex flex-col items-center">
-              <div class="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-700 overflow-hidden border-4 border-[#f59e0b] shadow-xl">
+              <div class="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-700 overflow-hidden border-4 border-[#f5290b] shadow-xl">
                 <img
                   alt="Jugador 2"
                   class="w-full h-full object-cover"
