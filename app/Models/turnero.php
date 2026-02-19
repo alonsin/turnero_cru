@@ -19,13 +19,18 @@ class turnero extends Model
         'id_jugador_1',
         'id_jugador_2',
         'posicion_cola',
-        'id_estatus'
+        'id_estatus',
+        'ronda_id'
     ];
 
 
     public function mesa()
     {
         return $this->belongsTo(Mesa::class, 'id_mesa', 'id');
+    }
+    public function ronda()
+    {
+        return $this->belongsTo(Rondas::class, 'ronda_id', 'id');
     }
 
     public function tournament()

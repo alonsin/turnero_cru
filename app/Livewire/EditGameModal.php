@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\EstatusTurner;
 use App\Models\Player;
+use App\Models\Rondas;
 use App\Models\turnero;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -12,10 +13,12 @@ use Livewire\Attributes\On;
 class EditGameModal extends Component
 {
     public $game, $gameId, $player1, $player2, $mesa, $estatus, $playersAll, $estatusall;
-    public $estatus_id, $grupo_id, $player1_id, $player2_id;
+    public $estatus_id, $grupo_id, $player1_id, $player2_id, $ronda;
     public $grupos = [];
+    public $rondas = [];
     public $fromTable;
     public $modecurrent;
+    public $esRondaGrupos = false;
     public $idtournament = 15; // CAMBIAR ESTO CADA TORNEO DIFERENTE O TORNEO CREADO O EN CURSO
 
     public function mount()
@@ -25,6 +28,7 @@ class EditGameModal extends Component
         }
         $this->getStatusAll();
         $this->getplayersAll();
+        $this->getRondasAll();
     }
 
     public function getStatusAll()
@@ -35,10 +39,14 @@ class EditGameModal extends Component
     {
         $this->playersAll = Player::all();
     }
+    public function getRondasAll()
+    {
+        $this->rondas = Rondas::all();
+    }
 
     #[On('openEditGameModal')]
     public function loadGame($id = null, $from = null, $mode = 'edit')
-    {       
+    {
         $this->resetValidation();
         $this->resetErrorBag();
         $this->fromTable = $from;
@@ -49,6 +57,7 @@ class EditGameModal extends Component
                 'player1',
                 'player2',
                 'mesa',
+                'ronda',
                 'estatus'
             ])->findOrFail($id);
 
@@ -61,6 +70,10 @@ class EditGameModal extends Component
             $this->grupo_id = $game->id_grupo;
             $this->player1_id = $game->id_jugador_1;
             $this->player2_id = $game->id_jugador_2;
+            $this->ronda = $game->ronda->id;
+
+            $this->esRondaGrupos = $game->ronda->id == Rondas::GRUPOS;
+
         } else {
             //  dd("aqui esta lleghando ");
             $this->reset([
@@ -71,6 +84,7 @@ class EditGameModal extends Component
                 'estatus',
                 'estatus_id',
                 'grupo_id',
+                'ronda',
                 'player1_id',
                 'player2_id'
             ]);
@@ -78,14 +92,18 @@ class EditGameModal extends Component
         $this->dispatch('show-edit-modal');
     }
 
+    public function updatedRonda($id)
+    {
+        $this->esRondaGrupos = $id == Rondas::GRUPOS;
+
+        if (!$this->esRondaGrupos) {
+            $this->grupo_id = null; // limpiamos grupo si no aplica
+        }
+    }
+
     public function updateGame()
     {
-        $validated = $this->validate([
-            'estatus_id' => 'required|exists:estatus_turner,id',
-            'grupo_id'   => 'nullable|string|max:1',
-            'player1_id' => 'required|exists:players,id',
-            'player2_id' => 'nullable|exists:players,id|different:player1_id',
-        ]);
+        $this->validate();
         $game = turnero::findOrFail($this->gameId);
 
         $game->update([
@@ -93,6 +111,7 @@ class EditGameModal extends Component
             'id_grupo'     => $this->grupo_id,
             'id_jugador_1' => $this->player1_id,
             'id_jugador_2' => $this->player2_id,
+            'ronda_id' => $this->ronda,
         ]);
     }
 
@@ -115,6 +134,7 @@ class EditGameModal extends Component
                 'id_jugador_2'   => $this->player2_id,
                 'id_tournament'  => $this->idtournament,
                 'posicion_cola'  => $nextPosition,
+                'ronda_id'  => $this->ronda,
             ]);
         });
     }
@@ -138,17 +158,33 @@ class EditGameModal extends Component
         switch ($this->modecurrent) {
 
             case 'create':
-                return [
+
+                $rules = [
                     'player1_id' => 'required|exists:players,id',
                     'player2_id' => 'required|exists:players,id|different:player1_id',
-                    'grupo_id'   => 'required|string|max:1',
+                    'ronda'      => 'required|integer|min:1',
                 ];
 
+                if ($this->ronda == 1) {
+                    $rules['grupo_id'] = 'required|string|max:1';
+                }
+
+                return $rules;
+
             case 'edit':
-                return [
+
+                $rules = [
                     'estatus_id' => 'required|exists:estatus_turner,id',
-                    'grupo_id'   => 'nullable|string|max:1',
+                    'ronda'      => 'required|integer|min:1',
                 ];
+
+                if ($this->ronda == 1) {
+                    $rules['grupo_id'] = 'required|string|max:1';
+                } else {
+                    $rules['grupo_id'] = 'nullable|string|max:1';
+                }
+
+                return $rules;
 
             default:
                 return [];
@@ -161,6 +197,7 @@ class EditGameModal extends Component
             'player1_id' => 'Jugador 1',
             'player2_id' => 'Jugador 2',
             'grupo_id' => 'Grupo',
+            'ronda' => 'Ronda',
         ];
     }
 

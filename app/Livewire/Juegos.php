@@ -37,6 +37,7 @@ class Juegos extends Component
             'tournament',
             'player1',
             'player2',
+            'ronda',
             'estatus'
         );
         $this->turneroFinalizados = (clone $baseQuery)

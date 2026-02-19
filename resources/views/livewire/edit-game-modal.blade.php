@@ -28,7 +28,34 @@
                     <div class="card border-0 rounded-4 p-4 mb-4 shadow-sm">
                         <div class="row g-4">
 
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fw-semibold small text-uppercase text-muted">
+                                    RONDA DE JUEGO
+                                </label>
+
+                                <select
+                                    class="form-select rounded-3 @error('ronda') is-invalid @enderror"
+                                    wire:model.live="ronda"
+                                    @disabled($fromTable=='currentgames' )>
+
+                                    <option value="">Seleccione grupo</option>
+
+                                    @foreach($rondas as $r)
+                                    <option value="{{ $r->id }}">
+                                        {{ $r->nombre_ronda }}
+                                    </option>
+                                    @endforeach
+                                </select>
+
+                                @error('ronda')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+
                             {{-- Grupo --}}
+                            @if ($esRondaGrupos)
                             <div class="col-12 col-md-4">
                                 <label class="form-label fw-semibold small text-uppercase text-muted">
                                     Grupo
@@ -37,6 +64,7 @@
                                 <select
                                     class="form-select rounded-3 @error('grupo_id') is-invalid @enderror"
                                     wire:model="grupo_id"
+                                    @disabled(!$esRondaGrupos)
                                     @disabled($fromTable=='currentgames' )>
 
                                     <option value="">Seleccione grupo</option>
@@ -54,9 +82,11 @@
                                 </div>
                                 @enderror
                             </div>
+                            @endif
+
 
                             @if($fromTable !== 'waitinggames')
-                            <div class="col-12 col-md-8">
+                            <div class="col-12 col-md-4">
                                 <label class="form-label fw-semibold small text-uppercase text-muted">
                                     Estatus del Juego
                                 </label>
@@ -130,7 +160,7 @@
                                 </label>
                                 <select
                                     class="form-select rounded-3 @error('player2_id') is-invalid @enderror"
-                                    @disabled($fromTable == 'currentgames')
+                                    @disabled($fromTable=='currentgames' )
                                     wire:model="player2_id">
                                     <option value="">Seleccione jugador</option>
                                     @foreach($playersAll as $player)

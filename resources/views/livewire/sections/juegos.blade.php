@@ -332,6 +332,7 @@
                     <thead>
                         <tr>
                             <th>Turno</th>
+                            <th>Ronda</th>
                             <th>Mesa</th>
                             <th>Grupo</th>
                             <th>Juego</th>
@@ -343,6 +344,7 @@
                         @forelse ($turneroEspera as $t)
                         <tr>
                             <td>00{{ $t->posicion_cola }}</td>
+                            <td>{{ $t->ronda->nombre_ronda }}</td>
                             <td>
                                 <button wire:click="$dispatch('openAssingTable', { id: {{ $t->id }} })"
                                     class="btn btn-sm btn-outline-primary">
