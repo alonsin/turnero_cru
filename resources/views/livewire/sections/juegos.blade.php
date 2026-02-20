@@ -209,10 +209,9 @@
                     <thead>
                         <tr>
                             <th>Mesa</th>
-                            <th>Grupo</th>
+                            <th>Grupo / Ronda</th>
                             <th>Juego</th>
                             <th>Estatus</th>
-                            <th>Acciones</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -220,7 +219,7 @@
                         @forelse ($turneroMesas as $t)
                         <tr>
                             <td>{{ $t->mesa->name ?? 'En espera' }}</td>
-                            <td>{{ $t->id_grupo }}</td>
+                            <td> {{$t->ronda->nombre_ronda}} {{ $t->id_grupo }}</td>
                             <td>
                                 <span class="badge bg-primary bg-opacity-25 text-primary">
                                     {{ $t->player1->name_player }}
@@ -235,12 +234,12 @@
                                     {{ $t->estatus->name_estatus }}
                                 </span>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <button class="action-btn"
                                     wire:click="$dispatch('openEditGameModal', { id: {{ $t->id }}, from: 'currentgames', mode: 'edit' })">
                                     <span class="material-symbols-outlined">edit</span>
                                 </button>
-                            </td>
+                            </td> -->
                             <td>
                                 <button class="action-btn action-btn-danger"
                                     wire:click="$dispatch('endGame', { id: {{ $t->id }}, mode: 'edit' })">
@@ -258,7 +257,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5">No hay juegos activos.</td>
+                            <td colspan="6">No hay juegos activos.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -367,7 +366,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6">No hay juegos en espera.</td>
+                            <td colspan="7">No hay juegos en espera.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -472,7 +471,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6">No hay juegos en espera.</td>
+                                <td colspan="9">No hay juegos en espera</td>
                             </tr>
                             @endforelse
                         </tbody>
